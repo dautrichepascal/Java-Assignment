@@ -1,0 +1,193 @@
+BEGIN CovidCase
+    CLASS FIELDS   
+    
+    country (String)
+    province (String)
+    region (String)
+    ageGroup (String)
+    sex (char)
+    cases (int)
+    date (Date)
+
+
+    DEFAULT CONSTRUCTOR
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: Creates an Object with the Default Values
+    ALGORITHM:
+        country = EMPTY STRING
+        province = EMPTY STRING
+        region = EMPTY STRING
+        ageGroup = EMPTY STRING
+        sex = EMPTY char
+        cases = 0
+        date = Date()
+
+
+    ALTERNATE CONSTRUCTOR
+    IMPORT: pCountry(String), pProvince (String), pRegion (String), pAgeGroup (String), pSex (char), pCases (int), pFinalDate(Date)
+    EXPORT: None
+    ASSERTION: Creates Object with imported values
+    ALGORITHM:
+        country = pCountry
+        province = pProvince
+        region = pRegion
+        ageGroup = pAgeGroup
+        sex = pSex
+        cases = pCases
+        date = pFinalDate
+
+
+    COPY CONSTRUCTOR
+    IMPORT: pCovidCase (CovidCase)
+    EXPORT: None
+    ASSERTION:  Creates a copy of the imported Object
+    ALGORITHM:
+        country = pCovidCase.getCountry()
+        province = pCovidCase.getProvince()
+        region = pCovidCase.getRegion()
+        ageGroup = pCovidCase.getAgeGroup()
+        sex = pCovidCase.getSex()
+        cases = pCovidCase.getCases()
+        date = pCovidCase.getDate()
+
+
+    setCountry
+    IMPORT: pCountry (String)
+    EXPORT: None
+    ASSERTION: mutator for country variable
+    ALGORITHM:
+        country = pCountry
+
+
+    setProvince
+    IMPORT: pProvince (String)
+    EXPORT: None
+    ASSERTION: mutator for province variable
+    ALGORITHM:
+        province = pProvince
+
+
+    setRegion
+    IMPORT: pRegion (String)
+    EXPORT: None
+    ASSERTION: mutator for region variable
+    ALGORITHM:
+        region = pRegion
+
+    
+    setAgeGroup
+    IMPORT: pAgeGroup (String)
+    EXPORT: None
+    ASSERTION: mutator for ageGroup variable
+    ALGORITHM:
+        ageGroup = pAgeGroup
+
+    
+    setSex
+    IMPORT: pSex (char)
+    EXPORT: None
+    ASSERTION: mutator for sex variable
+    ALGORITHM:
+        sex = pSex
+
+    
+    setCases
+    IMPORT: pCases (int)
+    EXPORT: None
+    ASSERTION: mutator for cases variable
+    ALGORITHM:
+        cases = pCases
+
+
+    setDate
+    IMPORT: pFinalDate (Date)
+    EXPORT: None
+    ASSERTION: mutator for date variable
+    ALGORITHM:
+        date = pFinalDate
+
+
+    getCountry
+    IMPORT: None
+    EXPORT: country (String)
+    ASSERTION: Accessor for country variable
+    ALGORITHM:
+        EXPORT COPY OF  country
+
+
+    getProvince
+    IMPORT: None
+    EXPORT: province (String)
+    ASSERTION: Accessor for province variable
+    ALGORITHM:
+        EXPORT COPY OF province
+
+
+    getRegion
+    IMPORT: None
+    EXPORT: region (String)
+    ASSERTION: Accessor for region variable
+    ALGORITHM:
+        EXPORT COPY OF region
+
+
+    getAgeGroup
+    IMPORT: None
+    EXPORT: ageGroup (String)
+    ASSERTION: Accessor for ageGroup variable
+    ALGORITHM:
+        EXPORT COPY OF  ageGroup
+
+    
+    getSex
+    IMPORT: None
+    EXPORT: sex (char)
+    ASSERTION: Accessor for sex variable
+    ALGORITHM:
+        EXPORT COPY OF sex
+
+
+    getCases
+    IMPORT: None
+    EXPORT: cases (int)
+    ASSERTION: Accessor for cases variable
+    ALGORITHM:
+        EXPORT COPY OF cases
+
+    
+    getDate
+    IMPORT: None
+    EXPORT: date (Date)
+    ASSERTION: Accessor for date variable
+    ALGORITHM:
+        EXPORT COPY OF date
+
+
+    
+    ACCESSOR: equals
+    IMPORT: inObject (Object)
+    EXPORT: isEqual (Boolean)
+    ASSERTION:  Returns true if two objects are equivalent
+    ALGORITHM:
+        isEqual = FALSE
+        IF inObject IS A CovidCase THEN
+            TRANSFORM inObject TO CovidCase NAMED inCovidCase
+                IF country EQUALS inCovidCase.getCountry() THEN
+                    IF province EQUALS inCovidCase.getProvince() THEN
+                        IF region EQUALS inCovidCase.getRegion() THEN
+                            IF ageGroup EQUALS inCovidCase.getAgeGroup() THEN
+                                IF sex EQUALS inCovidCase.getSex() THEN
+                                    IF cases EQUALS inCovidCase.getCases() THEN
+                                        IF date EQUALS inCovidCase.getDate() THEN
+                                            isEqual = TRUE
+
+
+    ACCESSOR: toString
+    IMPORT: None
+    EXPORT: str (String)
+    ASSERTION: Returns a string representation of the Object
+    ALGORITHM:
+        dateStr = Date.toString()
+        str = country + "," + province + "," + region + "," + ageGroup + "," + sex + "," + cases + "," + dateStr
+END CovidCase

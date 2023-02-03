@@ -1,0 +1,441 @@
+BEGIN Menu
+
+    METHOD: usersMenu
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: Is the over all menu system
+    ALGORITHM:
+
+        valid EQUALS FALSE
+
+        WHILE NOT valid DO
+
+            PRINT "\n\nWelcome to the COVID-19 Data Analysis Program. Make a selection from the menu below regarding the information you would like to see:\n\nPlease select from the menu below\n> 1. Statistis of entire nation\n> 2. Statistics of regions\n> 3. Exit the program."
+            userInput EQUALS FIRST CHAR OF USERS INPUT
+
+            CASE userInput
+
+                '1':
+                    PRINT"\nYour Choice: " + userInput
+                    menuOptionOne()
+                    valid EQUALS FALSE
+
+                '2':
+                    PRINT "\nYour Choice: " + userInput
+                    menuOptionTwo()
+                    valid EQUALS FALSE
+
+                '3':
+                    PRINT"\nYour Choice: " + userInput
+                    PRINT"\n\nHave a Nice Day !"
+                    valid EQUALS TRUE
+
+                DEFAULT:
+                    PRINT "Invalid Input Please Try Again!!"
+                    valid EQUALS FALSE
+
+            ENDCASE
+
+        ENDWHILE
+
+    END usersMenu
+
+
+
+    METHOD: menuOptionOne
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: Contains the First choice from the menu option that the user will see
+    ALGORITHM:
+        choice EQUALS 0 
+        numLines EQUALS 0
+
+        proposeRepetition EQUALS FALSE
+        exitLoop EQUALS FALSE
+        validation EQUALS FALSE
+        exValid EQUALS FALSE
+
+        fIO EQUALS FileIO()
+        covidCase[] EQUALS fIO.readFile()
+
+        numLines EQUALS fIO.readFile(fIO.fileName())
+
+        DO
+
+            DO
+
+                PRINT "\nStatistics for the entire nation: select from the menu below:"
+                PRINT "> 1. Display the total number of COVID-19 cases."
+                PRINT "> 2. Display the number of COVID-19 cases: Males."
+                PRINT "> 3. Display the number of COVID-19 cases: Females."
+                PRINT "> 4. Display the number of COVID-19 cases: 0-9 age group."
+                PRINT "> 5. Display the number of COVID-19 cases: 10-19 group."
+                PRINT "> 6. Display the number of COVID-19 cases: 20-29 group."
+                PRINT "> 7. Display the number of COVID-19 cases: 30-39 group."
+                PRINT "> 8. Display the number of COVID-19 cases: 40-49 group."
+                PRINT "> 9. Display the number of COVID-19 cases: 50-59 group."
+                PRINT "> 10. Display the number of COVID-19 cases: 60-69 group."
+                PRINT "> 11. Display the number of COVID-19 cases: 70-79 group."
+                PRINT "> 12. Display the number of COVID-19 cases: 80-89 group."
+                PRINT "> 13. Display the number of COVID-19 cases: 90+ age group.\n"
+
+                exValid EQUALS FALSE
+
+                WHILE exValid EQUALS FALSE DO
+
+                    choice EQUALS NEXT INTEGER INPUT
+
+                ENDWHILE
+
+                CASE choice
+
+                    1:
+                        exitLoop EQUALS FALSE
+
+                    2:
+                        genders EQUALS "M"
+                        exitLoop EQUALS FALSE
+
+                    3:
+                        genders EQUALS "F"
+                        exitLoop EQUALS FALSE
+
+                    4:
+                        data EQUALS "0-9"
+                        exitLoop EQUALS FALSE
+
+                    5:
+                        data EQUALS "10-19"
+                        exitLoop EQUALS FALSE
+
+                    6:
+                        data EQUALS "20-29"
+                        exitLoop EQUALS FALSE
+
+                    7:
+                        data EQUALS "30-39"
+                        exitLoop EQUALS FALSE
+
+                    8:
+                        data EQUALS "40-49"
+                        exitLoop EQUALS FALSE
+
+                    9:
+                        data EQUALS "50-59"
+                        exitLoop EQUALS FALSE
+
+                    10:
+                        data EQUALS "60-69"
+                        exitLoop EQUALS FALSE
+
+                    11:
+                        data EQUALS "70-79"
+                        exitLoop EQUALS FALSE
+
+                    12:
+                        data EQUALS "80-89"
+                        exitLoop EQUALS FALSE
+
+                    13:
+                        data EQUALS "90+"
+                        exitLoop EQUALS FALSE
+
+                    DEFAULT:
+                        PRINT "\n\nInvalid Input Please Try Again!!\n"
+
+                ENDCASE
+            WHILE exitLoop IS TRUE
+
+            sumCases EQUALS 0
+
+            IF choice EQUALS 2 OR choice EQUALS 3 THEN
+
+                FOR i = 0 TO numLines-1 CHANGEBY 1
+
+                    IF covidCase[i].getSex() EQUALS genders THEN
+
+                        sumCases EQUALS sumCases + CovidCase[i].getCases()
+
+                    ENDIF
+                ENDFOR
+
+                IF choice EQUALS 2 THEN
+                    
+                    data EQUALS "Male"
+
+                ELSE
+
+                    data EQUALS "Female"
+
+                ENDIF
+
+                PRINT "\nYour Choice: " + choice
+
+                fileOutput EQUALS "Total number of cases for " + data + ": " sumCases
+
+                PRINT fileOutput
+                fIO.fileWriter(fileOutput)
+             
+            ELSEIF choice IS GREATER THAN 3 AND choice IS LESS THAN 14 THEN
+
+                FOR i = 0 TO numLines-1 CHANGEBY 1
+
+                    IF CovidCase[i].getAgeGroup().equals(data) THEN
+
+                        sumCases EQUALS sumCases + CovidCase[i].getCases()
+
+                    ENDIF
+
+                ENDFOR
+
+                PRINT "\nYour Chocie: " + choice
+
+                fileOutput EQUALS "Total number of cases for " + data + ": " sumCases
+
+                PRINT fileOutput
+                fIO.fileWriter(fileOutput)
+
+            ELSE
+
+                FOR i = 0 TO numLines-1 CHANGEBY 1
+
+                    sumCases EQUALS sumCases + CovidCase[i].getCases()
+
+                ENDFOR
+
+                PRINT "\nYour Choice: " + choice
+
+                fileOutput EQUALS "Total number of cases: " + sumCases
+
+                PRINT fileOutput
+                fIO.fileWriter(fileOutput)
+
+            ENDIF
+
+            validation EQUALS FALSE
+
+            WHILE VALIDATION IS FALSE DO
+
+                PRINT "\n\nWould you like to make another selection (Y or N)?\n"
+
+                exitMethod EQUALS NEXT CHAR INPUT
+
+                CASE exitMethod
+
+                    'Y': 'y':
+                        validation EQUALS TRUE
+                        proposeRepetition EQUALS FALSE
+
+                    'N': 'n':
+                        proposeRepetition EQUALS TRUE
+                        validation EQUALS TRUE
+
+                    DEFAULT:
+                        PRINT "\nInvalid Input Please Try Again\n"
+                        validation EQUALS FALSE
+
+                ENDCASE
+
+            ENDWHILE
+
+        WHILE proposeRepetition EQUALS FALSE DO
+
+    END menuOptionOne
+
+
+    METHOD: menuOptionTwo
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: Contains the second choice from the menu option that the user will see
+    ALGORITHM:
+        selection EQUALS 0
+        netCases EQUALS 0
+        numLines EQUALS 0 
+
+        valid EQUALS FALSE
+        repetition EQUALS FALSE
+        exValid EQUALS FALSE
+
+        fIO EQUALS FileIO()
+        covidCase [] EQUALS fIO.readFile()
+
+        numLines EQUALS fIO.numberOfLines(fIO.fileName())
+
+        WHILE NOT valid DO
+            selection EQUALS 0
+            WHILE selection IS LESS THAN 1 OR selection IS GREATER THAN 4 DO
+                
+                exValid EQUALS FALSE
+                WHILE exValid IS FALSE DO
+
+                    PRINT "\nStatistics by Region: select from the menu below:"
+                    PRINT "which region would you like statistics from?\n\n1. Flanders\n2. Brussels\n3. Wallonia\n4. Unknown"
+
+                    IF selection IS GREATER THEN OR selection IS LESS THEN 0 THEN
+
+                        PRINT "Invalid input please try again !!"
+
+                    ENDIF
+
+                    exValid EQUALS TRUE
+                ENDWHILE
+            ENDWHILE
+
+            PRINT "\nYour Choice: " + selection
+
+            IF selection EQUALS 1 THEN
+
+                desiredRegion EQUALS "Flanders"
+
+            ELSEIF selection EQUALS 2 THEN
+
+                desiredRegion EQUALS "Brussels"
+
+            ELSEIF selection EQUALS 3 THEN
+
+                desiredRegion EQUALS "Wallonia"
+
+            ELSE
+
+                desiredRegion EQUALS "NA"
+
+            ENDIF
+
+            FOR i = 0 TO numLines-1 CHANGEBY 1
+            
+                IF covidCase[i].getRegion().equals(desiredRegion) THEN
+
+                    netCases EQUALS netCases + covidCase[i].getCases()
+
+                ENDIF
+
+            ENDFOR
+
+            fileOutput EQUALS "Total number of COVID-19 cases for " + desiredRegion + " is: " + netCases
+
+            PRINT fileOutput
+            fIO.fileWriter(fileOutput)
+
+            FOR i = 0 TO numLines-1 CHANGEBY 1
+
+                IF covidCase[i].getRegion().equals(desiredRegion) AND covidCase[i].getSex() EQUALS 'M' THEN
+
+                    netCases EQUALS netCases + covidCase[i].getCases()
+
+                ENDIF
+
+            ENDFOR
+
+            fileOutput EQUALS "Total number COVID-19 male cases for" + desiredRegion + " is: " + netCases
+
+            PRINT fileOutput
+            fIO.fileWriter(fileOutput)
+
+            FOR i = 0 TO numLines-1 CHANGEBY 1
+
+                IF covidCase[i].getRegion().equals(desiredRegion) AND covidCase[i].getSex() EQUALS 'F' THEN
+
+                    netCases EQUALS netCases + covidCase[i].getCases()
+
+                ENDIF
+
+            ENDFOR
+
+            fileOutput EQUALS "Total number COVID-19 female cases for" + desiredRegion + " is: " + netCases
+
+            PRINT fileOutput
+            fIO.fileWriter(fileOutput)
+
+            ageRange EQUALS "0-9"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "10-19"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "20-29"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "30-39"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "40-49"
+            sumForAges(ageRange, desiredRegion)
+            
+            ageRange EQUALS "50-59"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "60-69"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "70-79"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "80-89"
+            sumForAges(ageRange, desiredRegion)
+
+            ageRange EQUALS "90+"
+            sumForAges(ageRange, desiredRegion)
+
+            repetition EQUALS FALSE
+
+            WHILE repetition EQUALS FALSE DO
+
+                PRINT "\n\nWould you like to make another selection (Y or N): "
+                desireRepetition EQUALS NEXT CHAR INPUT
+
+                CASE desireRepetition
+
+                    'y': 'Y':
+                        repetition EQUALS TRUE
+                        valid EQUALS FALSE
+
+                    'N': 'n':
+                        valid EQUALS TRUE
+                        repetition EQUALS TRUE
+                    
+                    DEFAULT:
+                        PRINT "\nInvalid Choice Please Try Again!"
+
+                ENDCASE
+
+            ENDWHILE
+
+        ENDWHILE
+
+    END menuOptionTwo
+
+    METHOD: sumForAges (PRIVATE)  
+    IMPORT: pAgeRange (String), pRegionOfInterest (String)
+    EXPORT: None
+    ASSERTION: Method that returns the sum for every age for the region selected
+    ALGORITHM:
+
+        fIO EQUALS fileIO()
+
+        covidCase[] EQUALS fIO.readFile()
+
+        ageRange EQUALS pAgeRange
+        regionRequested EQUALS pRegionOfInterest
+
+        numLines EQUALS 0
+        totalCases EQUALS 0
+
+        numLines EQUALS fIO.numberOfLines(fIO.fileName())
+
+        FOR i = 0 TO numLines-1 CHANGEBY 1
+
+            IF covidCase[i].getRegion().equals(regionRequested) AND covidCase[i].getAgeGroup().equals(ageRange) THEN
+
+                totalCases EQUALS totalCases + covidCase[i].getCases()
+
+            ENDIF
+
+        ENDFOR
+
+        fileOutput EQUALS "Total number of COVID-19 cases in " + ageRange + " age group for " + regionRequested + " is " + totalCases
+        PRINT fileOutput
+        fIO.fileWriter(fileOutput)
+
+    END sumForAges
+
+END Menu

@@ -1,0 +1,12 @@
+BEGIN Main
+
+    METHOD: Main
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: Runs enitre program
+    ALGORITHM:
+        
+        menu EQUALS Menu()
+        menu.usersMenu()
+
+END Main

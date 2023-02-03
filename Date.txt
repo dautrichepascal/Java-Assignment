@@ -1,0 +1,108 @@
+BEGIN Date
+    CLASS FIELDS
+
+    dayOfMonth (int)
+    monthOfYear (int)
+    year (int)
+
+
+    DEFAULT CONSTRUCTOR
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: Creates an Object with the Default values
+    ALGORITHM:
+        dayOfMonth = 1
+        monthOfYear = 1
+        year = 2020
+
+
+    ALTERNATE CONSTRUCTOR
+    IMPORT: pDayOfMonth (int), pMonthOfYear (int), pYear (int)
+    EXPORT: None
+    ASSERTION:  Creates an object with the imported values
+    ALGORITHM:
+        dayOfMonth = pDayOfMonth
+        monthOfYear = pMonthOfYear
+        year = pYear
+
+
+    COPY CONSTRUCTOR
+    IMPORT: pDate (Date)
+    EXPORT: None
+    ASSERTION: Creates a copy of the imported object
+    ALGORITHM:
+        dayOfMonth = pDate.getDayOfMonth()
+        monthOfYear = pDate.getMonthOfYear()
+        year = pDate.getYear()
+
+    
+    setDayOfMonth
+    IMPORT: pDayOfMonth (int)
+    EXPORT: None
+    ASSERTION: mutator for dayOfMonth variable
+    ALGORITHM:
+        dayOfMonth = pDayOfMonth
+
+    
+    setMonthOfYear
+    IMPORT: pMonthOfYear (int)
+    EXPORT: None
+    ASSERTION:  mutator for monthOfYear variable
+    ALGORITHM:
+        monthOfYear = pMonthOfYear
+
+    
+    setYear
+    IMPORT: pYear (int)
+    EXPORT: None
+    ASSERTION: mutator for year variable
+    ALGORITHM:
+        year = pYear
+
+    
+    getDayOfMonth
+    IMPORT: None
+    EXPORT: dayOfMonth (int)
+    ASSERTION: Accessor for dayOfMonth variable
+    ALGORITHM:
+        EXPORT COPY OF dayOfMonth
+
+    
+    getMonthOfYear
+    IMPORT: None
+    EXPORT: monthOfYear (int)
+    ASSERTION: Accessor for monthOfYear variable
+    ALGORITHM:
+        EXPORT COPY OF monthOfYear
+
+    
+    getYear
+    IMPORT: None
+    EXPORT: year (int)
+    ASSERTION: Accessor for year variable
+    ALGORITHM:
+        EXPORT COPY OF year
+
+
+    
+    ACCESSOR: equals
+    IMPORT: inObject (Object)
+    EXPORT: isEqual (Boolean)
+    ASSERTION: Returns true if the two objects are equivalent
+        isEqual = FALSE
+        IF inObject IS A Date THEN
+            TRANSFORM inObject TO Date NAMED inDate
+                IF dayOfMonth EQUALS inDate.getDayOfMonth() THEN
+                    IF monthOfYear EQUALS inDate.getMonthOfYear() THEN
+                        IF year EQUALS inDate.getYear() THEN
+                            isEqual = TRUE
+
+
+    ACCESSOR: toString
+    IMPORT: None
+    EXPORT: dateString
+    ASSERTION: Returns a string representation of the object
+        dateString = dayOfMonth + "/" + monthOfYear + "/" + year
+
+
+END Date

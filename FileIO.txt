@@ -1,0 +1,95 @@
+BEGIN FileIO
+
+    METHOD: readFile
+    IMPORT: None
+    EXPORT: covidCaseArray (CovidCase[])
+    ASSERTION: Populates the CovidCase class with data from the csv
+    ALGORITHM:
+        fileName = fileName()
+        numberOfLines = numberOfLines(fileName)
+
+        OPEN fileName
+        READ line FROM fileName
+
+        lineNum = 0
+
+        WHILE NOT (fileName = EOF)
+
+            lineNum = lineNum + 1
+
+            IF lineNum IS GREATER THAN 1 THEN
+                data EQUALS SPLIT line BY (",")
+
+                IF LENGTH OF data EQUALS  9 THEN
+                    day EQUALS INTEGER OF data COLUMN 0
+                    month EQUALS INTEGER OF data COLUMN 1
+                    year EQUALS INTEGER OF data COLUMN 2
+                    country EQUALS data COLUMN 3
+                    province EQUALS data COLUMN 4
+                    region EQUALS data COLUMN 5
+                    ageGroup EQUALS data COLUMN 6
+                    sex EQUALS data COLUMN 7
+                    cases EQUALS INTEGER OF data COLUMN 8
+
+                    date EQUALS Date(day, month, year)
+                    covidCase EQUALS CovidCase(country, province, region, ageGroup, sex, cases, date)
+
+                    covidCaseArray OF SIZE lineNum - 2 POPULATE WITH covidCase
+                END IF
+            END IF
+
+            READ line FROM fileName
+
+        ENDWHILE
+    END readFile
+
+    METHOD: numberOfLines
+    IMPORT: pFileName (String)
+    EXPORT: lineNum (int)
+    ASSERTION: Counts the number of lines wihtin pFileName
+    ALGORITHM:
+        fileName = pFileName
+
+        OPEN fileName
+        lineNum = 0
+
+        READ line FROM fileName
+        WHILE NOT (fileName = EOF)
+
+            lineNum = lineNum + 1
+            
+            READ line FROM fileName
+        ENDWHILE
+        CLOSE fileName
+    END numberOfLines
+
+
+
+    METHOD: fileWriter
+    IMPORT: pOutput (String)
+    EXPORT: None
+    ASSERTION: Writes pOutput to a log file
+    ALGORITHM:
+
+        oToFile = pOutput
+        fName = "Output.txt"
+
+        IF fName DOES NOT EXIST THEN
+            CREATE fName
+        
+        OPEN fName
+        ADD TO fName (oToFile + NEW LINE)
+        CLOSE fName
+    END fileWriter
+
+
+    METHOD: fileName
+    IMPORT: None
+    EXPORT: fileToRead (String)
+    ASSERTION: returns the desired csv file to be read
+    ALGORITHM:
+
+        fileToRead = "COVID19BE_CASES.csv"
+    END fileName
+
+END FileIO
